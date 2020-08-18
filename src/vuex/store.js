@@ -34,6 +34,16 @@ const store = new Vuex.Store({
       price: 1390
     }]
   },
+  mutations: {
+    TOGGLE_BUSY (state) {
+      state.isBusy = !state.isBusy
+    }
+  },
+  actions: {
+    toggleBusy ({ commit }) {
+      commit("TOGGLE_BUSY")
+    }
+  },
   getters: { // retornamos con filter segun condicion
     availableProducts(state) {
       return state.products.filter((product) => {
