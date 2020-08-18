@@ -1,32 +1,42 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <img alt="Vue logo" src="./assets/logo.png">
     <p v-text="busy"></p>
+    <button @click.prevent="toggleBusy" class="btn btn-dark mb-3">Cambio</button>
     <p v-text="totalSale"></p>
 
-    <input type="text" placeholder="Buscar" v-model="search">
+    <input type="text" placeholder="Buscar" v-model="search" class="mb-4" width="300px">
     <ul v-if="searchById">
-      <li>{{searchById.name}}</li>
-      </ul>
-    <ul v-else>
-      <li v-for="(product, index) in availableProducts" :key="index">{{product.name}}</li>
+      <li class="list-group-item">{{searchById.name}}</li>
     </ul>
-    <p><b>Ofertas de ultimo Minuto</b></p>
+
+    <ul v-else>
+      <li v-for="(product, index) in availableProducts" :key="index" class="list-group-item">
+        {{product.name}} - Cantidad: {{product.stock}}
+        <button @click.prevent="addStock(product)" class="btn btn-secondary btn-sm">+</button>
+      </li>
+    </ul>
+
+    <p class="list-group-item active">OFERTAS DE ULTIMO MINUTO</p>
     <ul>
-      <li v-for="(product, index) in cheapProducts" :key="index">{{product.name}}: $ {{product.price}}</li>
+      <li v-for="(product, index) in cheapProducts" :key="index" class="list-group-item">
+        {{product.name}}: <b>${{product.price}}</b></li>
     </ul>
   </div>
 </template>
 
 <script>
 
-import {mapState, mapGetters} from 'vuex'
+import {mapState, mapGetters, mapActions} from 'vuex'
 export default {
   name: 'App',
   data() {
     return {
       search: null
     }
+  },
+  methods: {
+...mapActions(["toggleBusy","addStock"])
   },
   computed: {
     ...mapState(["isBusy", "sales"]),

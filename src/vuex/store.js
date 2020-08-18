@@ -34,14 +34,23 @@ const store = new Vuex.Store({
       price: 1390
     }]
   },
-  mutations: {
+  mutations: { // las mutaciones se escriben con MAYUSCULA PARA IDENTIFICAR DONDE HAY CAMBIOS DE STATE
     TOGGLE_BUSY (state) {
       state.isBusy = !state.isBusy
+    },
+    ADD_STOCK (state, product) {
+      let selectedProduct = state.products.find((prod) => {
+        return product.id == prod.id
+      })
+      selectedProduct.stock++
     }
   },
   actions: {
     toggleBusy ({ commit }) {
       commit("TOGGLE_BUSY")
+    },
+    addStock ({ commit }, product) {
+      commit("ADD_STOCK", product)
     }
   },
   getters: { // retornamos con filter segun condicion
@@ -64,15 +73,3 @@ const store = new Vuex.Store({
 })
 
 export default store 
-
-// var car = {
-//   start: function () {
-//     console.log("ejemplo uno")
-//   }
-// }
-
-// var car = {
-//   start() {
-//     console.log("ejemplo uno")
-//   }
-// }
