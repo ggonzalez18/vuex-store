@@ -1,28 +1,37 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-
     <p v-text="busy"></p>
-    <p v-text="sale"></p>
+    <p v-text="totalSale"></p>
+    <ul>
+      <li v-for="(product, index) in availableProducts" :key="index">{{product.nombre}}</li>
+    </ul>
   </div>
 </template>
 
 <script>
 
-import {mapState} from 'vuex'
+import {mapState, mapGetters} from 'vuex'
 export default {
   name: 'App',
-  computed: mapState({
-    busy(state) {
-      let statusBusy = state.isBusy ? 'ocupado' : 'disponible'
+  computed: {
+    ...mapState(["isBusy", "sales"]),
+     // permite acceder a los metodos sin tanta busqueda (this.bla bla) referenciando al store y variable state
+     ...mapGetters(['availableProducts']),
+    busy() {
+      let statusBusy = this.isBusy ? 'ocupado' : 'disponible'
       return `Estado ${statusBusy}`
     },
-    sale(state) {
-      return `El total de ventas es: ${state.sales}`
+    totalSale() {
+      return `El total de ventas es: ${this.sales}`
     }
-  })
+  }
 }
+
 </script>
+
+
+
 
 <style>
 #app {
