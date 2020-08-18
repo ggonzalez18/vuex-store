@@ -9,38 +9,60 @@ const store = new Vuex.Store({
     sales: 0,
     products: [{
       id: '0001',
-      nombre: 'Agua sin gas',
+      name: 'Agua sin gas',
       stock: 30,
-      precio: 670
+      price: 670
     }, {
       id: '0002',
-      nombre: 'Leche extra proteína',
+      name: 'Leche extra proteína',
       stock: 25,
-      precio: 1190
+      price: 1190
     }, {
       id: '0003',
-      nombre: 'Huevos Docena',
+      name: 'Huevos Docena',
       stock: 10,
-      precio: 1590
+      price: 1590
     }, {
       id: '0004',
-      nombre: 'Pan marraqueta integral 1kg',
+      name: 'Pan marraqueta integral 1kg',
       stock: 100,
-      precio: 990
+      price: 990
     }, {
       id: '0005',
-      nombre: 'Avena multisemillas',
+      name: 'Avena multisemillas',
       stock: 0,
-      precio: 1390
+      price: 1390
     }]
   },
-  getters: {
+  getters: { // retornamos con filter segun condicion
     availableProducts(state) {
       return state.products.filter((product) => {
         return product.stock > 0
+      })
+    },
+    cheapProducts(state, getters) {
+      return getters.availableProducts.filter((product) => {
+        return product.price < 1000
+      })
+    },
+    getProductById: (state, getters) => (id) => { //funcion que retorna funcion
+      return getters.availableProducts.find((product) => {
+        return product.id == id
       })
     }
   }
 })
 
 export default store 
+
+// var car = {
+//   start: function () {
+//     console.log("ejemplo uno")
+//   }
+// }
+
+// var car = {
+//   start() {
+//     console.log("ejemplo uno")
+//   }
+// }
