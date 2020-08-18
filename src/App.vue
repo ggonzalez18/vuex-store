@@ -1,18 +1,26 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+    <p v-text="busy"></p>
+    <p v-text="sale"></p>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
+import {mapState} from 'vuex'
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  computed: mapState({
+    busy(state) {
+      let statusBusy = state.isBusy ? 'ocupado' : 'disponible'
+      return `Estado ${statusBusy}`
+    },
+    sale(state) {
+      return `El total de ventas es: ${state.sales}`
+    }
+  })
 }
 </script>
 
